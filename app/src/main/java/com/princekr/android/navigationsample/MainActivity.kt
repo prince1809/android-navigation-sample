@@ -1,6 +1,9 @@
 package com.princekr.android.navigationsample
 
+import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
@@ -32,6 +35,32 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
 
         setupActionBar(navController, appBarConfiguration)
+
+        setupNavigationMenu(navController)
+
+        setupBottomMenu(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            val dest: String = try {
+                resources.getResourceName(destination.id)
+            } catch (e: Resources.NotFoundException) {
+                Integer.toString(destination.id)
+            }
+
+            Toast.makeText(
+                this@MainActivity, "Navigate to $dest",
+                Toast.LENGTH_SHORT
+            ).show()
+            Log.d("NavigationActivity", "Navigated to $dest")
+        }
+    }
+
+    private fun setupBottomMenu(navController: NavController) {
+
+    }
+
+    private fun setupNavigationMenu(navController: NavController) {
+
     }
 
     private fun setupActionBar(
